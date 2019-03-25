@@ -4,11 +4,11 @@
 -- @date Sep 27th,2018
 -- 借签链式表达式的思路
 ---- 但是有一个问题，就是不能实现复杂的结构
-local cfg_fac = require 'libs.mysql.mysql_cfg'
-local mysql_con = require 'libs.mysql.mysql_con'
-local fac = require 'libs.mysql.mysql_confac'
-local log = require 'libs.log.log_helper'
-local cjson = require 'cjson'
+local cfg_fac = require 'tiny.orm.mysql.cfg'
+local mysql_con = require 'tiny.orm.mysql.connector'
+local fac = require 'tiny.orm.mysql.factory'
+local log = require 'tiny.utils.log.helper'
+local cjson = require 'cjson.safe'
 local _M = {}
 _M.VERSION = "1.0"
 local mt = { __index = _M }

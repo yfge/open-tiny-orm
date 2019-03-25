@@ -1,12 +1,12 @@
 -- mysql 连接管理
 -- 管理当前上下文的连接
 -- 用来控制trans
--- @author 拐 <geyf@knowbox.cn>
+-- @author 拐 <geyunfei@gmail.com>
 -- @version 1.0
 -- @Date Nov 19th,2018
-local cfg_fac = require 'libs.mysql.mysql_cfg'
-local mysql_con = require 'libs.mysql.mysql_con'
-local transaction = require 'libs.mysql.mysql_transaction'
+local cfg_fac = require 'tiny.orm.mysql.cfg'
+local mysql_con = require 'tiny.orm.mysql.connector'
+local transaction = require 'tiny.orm.mysql.transaction'
 local fac = {}
 -- 得到查询连接
 function fac.get_query_con(_,cfg)

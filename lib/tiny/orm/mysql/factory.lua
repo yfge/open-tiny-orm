@@ -1,10 +1,10 @@
 -- orm 的操作基类
 -- @version 1.0 
--- @auth 拐 <geyf@knowbox.cn>
+-- @auth 拐 <geyunfei@gmail.com>
 -- @date Sep 29th ,2018
 -- 目前只实现查询功能
-local qtx = require('libs.mysql.mysql_query')
-local log = require 'libs.log.log_helper'
+local qtx = require('tiny.orm.mysql.query')
+local log = require 'tiny.utils.log.helper'
 local _M = {} _M.VERSION = "1.0"
 local mt = { __index = _M }
 -- 构造函数

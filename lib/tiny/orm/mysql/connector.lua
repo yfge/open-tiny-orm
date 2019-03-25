@@ -1,5 +1,4 @@
 local mysql = require 'resty.mysql'
-local util = require 'libs.utils.util'
 local connector = {
     modelMaster = "master",
     modelSlave = "slave",
@@ -14,7 +13,6 @@ function connector.new(_,config)
         database = config.database or 0,
         user = config.user or "",
         password = config.password or "",
-        --charset = config.charset or "UTF8", maxPacketSize = config.maxPacketSize or 1024*1024,
     }
     setmetatable(instance, mt)
     return instance
@@ -79,7 +77,7 @@ function connector:getHost(model)
             host = self.clusters.slave[1][1]
             port = self.clusters.slave[1][2]
         else
-            local index = math.floor(util.getStartTime()) % n + 1
+            local index = math.floor(ngx.now()) % n + 1
             host = self.clusters.slave[index][1]
             port = self.clusters.slave[index][2]
         end
