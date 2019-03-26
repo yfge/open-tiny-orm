@@ -1,6 +1,6 @@
-local mysql_cfg = require 'libs.mysql.mysql_cfg'
-local mysql_con = require 'libs.mysql.mysql_con'
-local log = require 'libs.log.log_helper'
+local mysql_cfg = require 'tiny.orm.mysql.cfg'
+local mysql_con = require 'tiny.orm.mysql.connector'
+local log = require 'tiny.log.helper'
 local M = {}
 M._VERSION = "1.0"
 local mt = { __index = M }
