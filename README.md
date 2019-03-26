@@ -113,7 +113,7 @@ local m = model:new(
 # 事务 
 
 ```lua
-    local trans = require('libs.mysql.mysql_transaction')
+    local trans = require('tiny.orm.mysql.transaction')
     local t = trans:new()
     t:start()
     --- 各种操作
