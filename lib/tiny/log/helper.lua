@@ -5,7 +5,7 @@
 local debug = require('debug')
 local json = require('cjson')
 local _M = {}
-_M._VERSION = "1.0"
+_M._VERSION = "0.2"
 local mt = { __index = _M }
 local levels = { 'trace','debug','info','warn','err','fatal'}
 local cjson = require "cjson.safe"
