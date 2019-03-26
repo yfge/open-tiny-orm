@@ -7,8 +7,8 @@
 local cfg_fac = require 'tiny.orm.mysql.cfg'
 local mysql_con = require 'tiny.orm.mysql.connector'
 local fac = require 'tiny.orm.mysql.factory'
-local log = require 'tiny.utils.log.helper'
-local cjson = require 'cjson.safe'
+local log = require 'tiny.log.helper'
+local cjson = require 'cjson'
 local _M = {}
 _M.VERSION = "1.0"
 local mt = { __index = _M }

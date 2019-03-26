@@ -4,7 +4,7 @@
 -- @date Sep 29th ,2018
 -- 目前只实现查询功能
 local qtx = require('tiny.orm.mysql.query')
-local log = require 'tiny.utils.log.helper'
+local log = require 'tiny.log.helper'
 local _M = {} _M.VERSION = "1.0"
 local mt = { __index = _M }
 -- 构造函数
