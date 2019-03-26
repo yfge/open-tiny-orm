@@ -6,7 +6,7 @@
 ---- 但是有一个问题，就是不能实现复杂的结构
 local cfg_fac = require 'tiny.orm.mysql.cfg'
 local mysql_con = require 'tiny.orm.mysql.connector'
-local fac = require 'tiny.orm.mysql.factory'
+local fac = require 'tiny.orm.mysql.confac'
 local log = require 'tiny.log.helper'
 local cjson = require 'cjson'
 local _M = {}
