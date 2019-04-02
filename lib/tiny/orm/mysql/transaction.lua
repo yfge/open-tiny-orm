@@ -1,4 +1,4 @@
-local mysql_cfg = require 'tiny.orm.mysql.cfg'
+local mysql_cfg = require 'tiny.util.cfg'
 local mysql_con = require 'tiny.orm.mysql.connector'
 local log = require 'tiny.log.helper'
 local M = {}
@@ -58,7 +58,7 @@ end
 -- 得到连接 内部使用
 function M:get_con(cfg)
     if self._cons[cfg] == nil then
-        local db =  mysql_con:new(mysql_cfg:get(cfg))
+        local db =  mysql_con:new(mysql_cfg:get_mysql_cfg(cfg))
         self._cons[cfg] = db :connectByMaster()
         exec(self._cons[cfg] ,'start transaction')
     end

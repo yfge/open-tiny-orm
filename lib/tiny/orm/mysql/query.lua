@@ -4,7 +4,7 @@
 -- @date Sep 27th,2018
 -- 借签链式表达式的思路
 ---- 但是有一个问题，就是不能实现复杂的结构
-local cfg_fac = require 'tiny.orm.mysql.cfg'
+local cfg_fac = require 'tiny.util.cfg'
 local mysql_con = require 'tiny.orm.mysql.connector'
 local fac = require 'tiny.orm.mysql.confac'
 local log = require 'tiny.log.helper'
@@ -259,7 +259,7 @@ local function create(m)
 		log.trace(sql)
 	end
 	if m.model._source then
-        local db = mysql_con:new(cfg_fac:get(m.model._source))
+        local db = mysql_con:new(cfg_fac:get_mysql_cfg(m.model._source))
 	    local con = db:connectBySlave()
         return exec(con,sql)
     else 

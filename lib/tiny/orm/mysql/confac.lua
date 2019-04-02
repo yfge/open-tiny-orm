@@ -4,7 +4,7 @@
 -- @author 拐 <geyunfei@gmail.com>
 -- @version 1.0
 -- @Date Nov 19th,2018
-local cfg_fac = require 'tiny.orm.mysql.cfg'
+local cfg_fac = require 'tiny.util.cfg'
 local mysql_con = require 'tiny.orm.mysql.connector'
 local transaction = require 'tiny.orm.mysql.transaction'
 local fac = {}
@@ -12,7 +12,7 @@ local fac = {}
 function fac.get_query_con(_,cfg)
     local trans = transaction:new()
     if trans:is_in_trans() == false then
-        local db = mysql_con:new(cfg_fac:get(cfg))
+        local db = mysql_con:new(cfg_fac:get_mysql_cfg(cfg))
         local con = db:connectBySlave()
         return con
     else
@@ -23,7 +23,7 @@ end
 function fac.get_op_con(_,cfg)
     local trans = transaction:new()
     if trans:is_in_trans() == false then
-        local db = mysql_con:new(cfg_fac:get(cfg))
+        local db = mysql_con:new(cfg_fac:get_mysql_cfg(cfg))
         local con = db:connectByMaster()
         return con
     else
