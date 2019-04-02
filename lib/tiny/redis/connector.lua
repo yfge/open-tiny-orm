@@ -1,25 +1,18 @@
 local setmetatable = setmetatable
+local cfg_fac = require('tiny.util.cfg')
 local crc32Short = ngx.crc32_short
 local redis = require("resty.redis")
-
 local connector = {}
 local mt = {__index = connector}
 local cjson = require "cjson.safe"
 function connector:new(config)
-      local instance = {
-        timeout = config.timeout or 1000,
-        pool = config.pool or {maxIdleTime = 120000, size = 200},
-        clusters = config.clusters or {},
-        database = config.database or 0,
-        password = config.password or "",
-    }
+    local instance = cfg_fac:get_redis_cfg(config) 
     setmetatable(instance, mt)
     return instance
 end
 
 function connector:connectByKey(key)
     local hostInfo = self:getHost(key)
-
     local host = hostInfo[1]
     local port = hostInfo[2]
     local red = redis:new()
@@ -55,5 +48,6 @@ function connector:keepAlive(red)
     end
     return true
 end
+
 
 return connector

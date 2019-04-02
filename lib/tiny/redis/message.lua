@@ -1,18 +1,12 @@
 local redis_c = require "resty.redis"
+local cfg_fac = require "tiny.util.cfg"
 local cjson = require 'cjson'
 local M = {}
 local mt = {__index = M}
 
 
 function M:new(cfg)
-    local ins = {
-            timeout = cfg.timeout or 60000,
-            pool = cfg.pool or {maxIdleTime = 120000,size = 200},
-            database = cfg.database or 0,
-            host = cfg .host,
-            port = cfg. port,
-            password = cfg .password or ""
-    }
+    local ins = cfg_fac:get_redis_cfg(cfg)
     setmetatable(ins,mt)
     return ins
 end
@@ -37,7 +31,7 @@ end
 
 
 local function keep_alive(red,cfg)
-    local ok,err = red:set_keepalive(cfg.pool.maxIdleTime,cfg.pool.size)
+    local ok,err = red:set_keepalive(cfg.pool.maxIdleTime,cfg.pool.size)   
     if not ok then
         red:close()
     end
