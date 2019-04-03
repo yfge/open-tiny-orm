@@ -1,7 +1,23 @@
 -- mysql 的配置读取工具
 -- 支持从配置读取或是串读取
 
+local log = require('tiny.log.helper')
+local phase = ngx.get_phase()
+
+
+local mysqlconf ="config.mysql"
+local redisconf ="config.redis"
+local cacheconf ="config.cache"
+ngx.log(ngx.ERR,phase)
+if phase == 'init' or phase == 'init_woker' then 
+    mysqlconf = ngx.var.open_tiny_mysql or "config.mysql"
+    redisconf = ngx.var.open_tiny_redis or "config.redis"
+    cacheconf = ngx.var.open_tiny_cache or "config.cache"
+end
 local cfg = {}
+cfg._VERSION="0.2"
+
+
 function cfg:get_mysql_cfg(config)
     local mysql_cfg = nil 
     if type(config) == 'string' then

@@ -1,10 +1,20 @@
 # orm
 One ORM for Openresty
+# 更新记录
+
+
+# 目录
+[toc]
 # 安装
 ```bash
 opm install yfge/open-tiny-orm
 ```
 # 设置
+系统配置的配置都放在config目录下，即需要以`require('config.mysql')`等形式进行引入   
+可以通过ngx变量更改其位置 
+open\_tiny\_mysql mysql配置文件,默认config.mysql    
+open\_tiny\_redis redis配置文件,默认config.redis
+open\_tiny\_cache 缓存配置文件,默认config.cache     
 
 # model
 
