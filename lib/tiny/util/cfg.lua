@@ -23,6 +23,7 @@ function cfg:get_mysql_cfg(config)
     return instance 
 end
 
+
 function cfg:get_redis_cfg(config)
     local redis_config = nil 
     if type(config) == "string" then
@@ -35,9 +36,22 @@ function cfg:get_redis_cfg(config)
         pool = redis_config.pool or {maxIdleTime = 120000, size = 200},
         clusters = redis_config.clusters or {},
         database = redis_config.database or 0,
-        password = redis_config.password or "",
+        password = redis_config.password ,
     }
+    
     return instance
 end
 
+function cfg:get_cache_cfg (config)
+    local cache_config = nil 
+    if type(config) == "string" then 
+        local success,cfg = pcall(require,'config.cache')
+        if success then
+            cache_config = cfg[config]
+        end
+    else 
+        cache_config = config
+    end
+    return cache_config
+end
 return cfg 

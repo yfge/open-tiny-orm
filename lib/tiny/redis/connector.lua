@@ -27,7 +27,6 @@ function connector:connect_by_key(key)
         ok, err = red:auth(self.password)
     elseif err then
         return nil, err
-
     end
     if err then
         return nil
@@ -48,6 +47,5 @@ function connector:keep_alive(red)
     end
     return true
 end
-
 
 return connector

@@ -7,12 +7,8 @@ function M.new(self,config)
     if catlog ~= nil then 
         local shared = ngx.shared[catlog]
         ins.shared = shared 
-        if config.expired ~=nil then
-            ins.expired = config.expired
-        end
-        if config.key_pre ~= nil then
-            ins.key_pre = config.key_pre
-        end
+        ins.expired = config.expired or 0 
+        ins.key_pre = config.key_pre or ""
         setmetatable(ins,M)
         return ins
     else 
@@ -21,24 +17,17 @@ function M.new(self,config)
 end
 
 function M:set(key,ob)
-    local set_key = tostring(key)
-    if self.key_pre then
-        set_key = self.key_pre .. set_key
-    end
-    local timeout = self.expired or 0
-    local success,err,forcible self.shared:set(key,cjson.encode(ob),timeout)
+    local set_key = self.key_pre .. tostring(key)
+    local success,err,forcible =  self.shared:set(key,cjson.encode(ob),self.expired)
     return success 
 end
 
 
 function M:get(key)
-    local set_key = tostring(key)
-    if self.key_pre then
-        set_key = self.key_pre .. set_key
-    end
+    local set_key = self.key_pre .. tostring(key)
     local str = self.shared:get(set_key)
     if str then
-        return cjson.decode(str)
+        return cjson.decode(str) or str
     else
         return nil
     end

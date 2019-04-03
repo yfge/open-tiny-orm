@@ -14,7 +14,7 @@ function _M:new(model,cache_cfg)
    
 	local _ins= { _model = model,_cache=cache_cfg}
 	if cache_cfg ~= nil then 
-        local cache = cache_fac.get(cache_cfg.cache_type,cache_cfg.cache_cfg)
+        local cache = cache_fac.get(cache_cfg)
         if cache ~= nil then
             _ins._cache =cache 
         end

@@ -1,6 +1,8 @@
 local mysql_cfg = require 'tiny.util.cfg'
 local mysql_con = require 'tiny.orm.mysql.connector'
 local log = require 'tiny.log.helper'
+local cjson = require 'cjson.safe'
+local crc32_short = ngx.crc32_short 
 local M = {}
 M._VERSION = "1.0"
 local mt = { __index = M }
@@ -57,6 +59,10 @@ function M:rollback()
 end
 -- 得到连接 内部使用
 function M:get_con(cfg)
+    local key = cfg 
+    if type(key) == 'table' then 
+        key = tostring(crc32_short(cjson.encode(key)))
+    end
     if self._cons[cfg] == nil then
         local db =  mysql_con:new(mysql_cfg:get_mysql_cfg(cfg))
         self._cons[cfg] = db :connect_by_master()
