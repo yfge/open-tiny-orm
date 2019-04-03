@@ -5,7 +5,7 @@ One ORM for Openresty
 
 # 目录  
 
-@[TOC]  
+[TOC]  
 
 # 安装  
 ```bash
