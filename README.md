@@ -39,7 +39,9 @@ opm install yfge/open-tiny-orm
 	}
 
 ```
-# model
+
+# 快速开始  
+## model
 
 * 用现有的配置定义,需要可以 `require ('config.mysql') `
 ```lua  
@@ -90,7 +92,7 @@ local m = model:new(
     'id'
 )
 ```
-# 增删改查
+## 增删改查
 ```lua
     --- 增删改查
     --- 引入 data
@@ -116,7 +118,7 @@ local m = model:new(
 
 ```
 
-# 分页 
+## 分页 
 ```lua
      cal items = nil
      local query = fac:get_query()
@@ -143,7 +145,7 @@ local m = model:new(
 
 ```
 
-# 事务 
+## 事务 
 
 ```lua
     local trans = require('tiny.orm.mysql.transaction')
@@ -156,7 +158,15 @@ local m = model:new(
     -- 回滚
 ```
 
-
+# API
+## tiny.orm.mysql.model 
+*定义*  `local model = require('tiny.orm.mysql.model')`     
+## model:new
+*定义* `local m = model:new(table_name,columns,data_source,id_column) `
+*参数*  
+* table\_name  string  mysql数据库的表名
+* columns   table 表中所含的数据列
+* source    string  或 table,模型的数据源,当为string 时，为配置文件中的一个值
 # todo 
 1. 返回查询总数
 2. 缓存 
