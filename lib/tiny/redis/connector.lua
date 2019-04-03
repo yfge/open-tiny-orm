@@ -11,8 +11,8 @@ function connector:new(config)
     return instance
 end
 
-function connector:connectByKey(key)
-    local hostInfo = self:getHost(key)
+function connector:connect_by_key(key)
+    local hostInfo = self:get_host(key)
     local host = hostInfo[1]
     local port = hostInfo[2]
     local red = redis:new()
@@ -30,18 +30,18 @@ function connector:connectByKey(key)
 
     end
     if err then
-    	ngx.log(ngx.ERR,err)
+        return nil
     end
     red:select(self.database)
     return red
 end
 
-function connector:getHost(key)
+function connector:get_host(key)
     local idx = crc32Short(key) % (#self.clusters) + 1
     return self.clusters[idx]
 end
 
-function connector:keepAlive(red)
+function connector:keep_alive(red)
     local ok, err = red:set_keepalive(self.pool.maxIdleTime, self.pool.size)
     if not ok then
         red:close()

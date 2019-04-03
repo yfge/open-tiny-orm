@@ -59,7 +59,7 @@ end
 function M:get_con(cfg)
     if self._cons[cfg] == nil then
         local db =  mysql_con:new(mysql_cfg:get_mysql_cfg(cfg))
-        self._cons[cfg] = db :connectByMaster()
+        self._cons[cfg] = db :connect_by_master()
         exec(self._cons[cfg] ,'start transaction')
     end
     return self._cons[cfg]

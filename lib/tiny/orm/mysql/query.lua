@@ -13,7 +13,7 @@ local _M = {}
 _M.VERSION = "1.0"
 local mt = { __index = _M }
 -- 执行mysql
-local function exec(con,sql)
+local function exec(con,sql,cfg)
 	local res, err,errcode,state = con:query(sql)
 	while err == 'again' do
 		res,err,errcode,state = con:read_result()
@@ -21,6 +21,7 @@ local function exec(con,sql)
  	if (err) then
 		log.info({msg='sql exeute err',err=err,sql=sql})
 	end	
+    fac:keep_alive_con(con,cfg)
 	if res then
 		return res
 	else 
@@ -67,7 +68,7 @@ function _M:create_insert(item)
     sql = params .. sql --.."select LAST_INSERT_ID();"
    	if self.model._source then 
         local con = fac:get_op_con(self.model._source)
-        local res =  exec(con,sql)
+        local res =  exec(con,sql,self.model._source)
         if res ~= nil then 
             local id = res.insert_id
             item[self.model._id_col] = id
@@ -109,7 +110,7 @@ function _M:create_update(item)
     sql = params .. sql --.."select LAST_INSERT_ID();"
    	if self.model._source then
         local con = fac:get_op_con(self.model._source)
-        local res =  exec(con,sql)
+        local res =  exec(con,sql,self.model._source)
         if res ~= nil then
             return true
         else
@@ -135,7 +136,7 @@ function _M:create_delete(item)
     sql = params .. sql --.."select LAST_INSERT_ID();"
    	if self.model._source then
         local con = fac:get_op_con(self.model._source)
-        local res =  exec(con,sql)
+        local res =  exec(con,sql,self.model._source)
         if res ~= nil then
             return true
         else 
@@ -260,8 +261,8 @@ local function create(m)
 	end
 	if m.model._source then
         local db = mysql_con:new(cfg_fac:get_mysql_cfg(m.model._source))
-	    local con = db:connectBySlave()
-        return exec(con,sql)
+	    local con = db:connect_by_slave()
+        return exec(con,sql,m.model._source)
     else 
 		return sql
 	end
