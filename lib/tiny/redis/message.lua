@@ -15,7 +15,7 @@ end
 local function get_con(cfg)
     local red = redis_c:new()
     red:set_timeout(cfg.timeout)
-    local ok,err = red:connect(cfg.host,cfg.port)
+    local ok,err = red:connect(cfg.clusters[1][1],cfg.clusters[1][2])
     if not ok then
         return nil
     end

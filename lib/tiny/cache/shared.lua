@@ -32,8 +32,9 @@ function M:get(key)
         return nil
     end
 end
-
-
-
+function M:del(key)
+    local set_key = self.key_pre .. tostring(key)
+    return self.shared:del(set_key)
+end
 return M
 

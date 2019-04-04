@@ -18,7 +18,7 @@ function M.new(self,config)
 end
 
 function M:set(key,ob)
-    local set_key = self.key_pre .. key 
+    local set_key = self.key_pre .. tostring(key) 
     local rd = self.redis:connect_by_key(set_key) 
     
     local suc,msg 
@@ -34,8 +34,7 @@ end
 
 
 function M:get(key)
-    
-    local set_key = self.key_pre .. key 
+    local set_key = self.key_pre .. tostring(key)
     local rd = self.redis:connect_by_key(set_key)
     if rd then 
         local str = rd:get(set_key)
@@ -48,6 +47,18 @@ function M:get(key)
     end
     return nil
 end
+
+function M:del(key)
+    local set_key = self.key_pre .. tostring(key) 
+    local rd = self.redis:connect_by_key(set_key)
+    if rd then 
+        local res = rd:del(set_key)
+        self.redis:keep_alive(rd)
+        return res
+    end
+    return false 
+end
+
 
 
 return M
