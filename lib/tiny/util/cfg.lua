@@ -63,8 +63,6 @@ function cfg:get_cache_cfg (config)
         local success,cfg,err = pcall(require,cacheconf)
         if success then
             cache_config = cfg[config]
-        else 
-            ngx.log(ngx.ERR,success)
         end
     else 
         cache_config = config

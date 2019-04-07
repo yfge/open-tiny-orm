@@ -9,7 +9,6 @@ function M.new(self,config)
         ins.shared = shared 
         ins.expired = config.expired or 0 
         ins.key_pre = config.key_pre or ""
-        ngx.log(ngx.ERR,cjson.encode(config))
         setmetatable(ins,M)
         return ins
     else 
