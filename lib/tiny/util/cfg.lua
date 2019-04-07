@@ -8,7 +8,6 @@ local phase = ngx.get_phase()
 local mysqlconf ="config.mysql"
 local redisconf ="config.redis"
 local cacheconf ="config.cache"
-ngx.log(ngx.ERR,phase)
 if phase == 'init' or phase == 'init_woker' then 
     mysqlconf = ngx.var.open_tiny_mysql or "config.mysql"
     redisconf = ngx.var.open_tiny_redis or "config.redis"
@@ -43,7 +42,7 @@ end
 function cfg:get_redis_cfg(config)
     local redis_config = nil 
     if type(config) == "string" then
-        redis_config = require('config.redis')[config]
+        redis_config = require(redisconf)[config]
     else
         redis_config = config
     end
@@ -61,9 +60,11 @@ end
 function cfg:get_cache_cfg (config)
     local cache_config = nil 
     if type(config) == "string" then 
-        local success,cfg = pcall(require,'config.cache')
+        local success,cfg,err = pcall(require,cacheconf)
         if success then
             cache_config = cfg[config]
+        else 
+            ngx.log(ngx.ERR,success)
         end
     else 
         cache_config = config
