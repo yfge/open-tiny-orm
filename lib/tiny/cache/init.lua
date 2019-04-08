@@ -7,7 +7,7 @@ local  cache = {
 local cfg = require('tiny.util.cfg')
 
 local M = {}
-M._VERSION="1.0"
+M._VERSION="0.3b"
 
 function M.get(config)
     local cache_cfg = cfg:get_cache_cfg(config)
