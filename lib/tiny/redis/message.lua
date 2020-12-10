@@ -49,6 +49,9 @@ function M:subscribe(key,func)
         local flag = true
         
         while flag do
+            if ngx.worker.exiting() then
+                return
+            end
             local res,err = red:read_reply()
             if err then
             ;
