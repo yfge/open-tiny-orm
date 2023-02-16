@@ -68,59 +68,61 @@ open-tiny-orm集成了orm,缓存等功能,为了方便使用和集成,这些组�
 2. 定义config/redis.lua后初始化缓存
 config/redis.lua
 
-    ```lua
-    return {
-        default = {
-        timeout=1000,
-        pool = {
-            maxIdelTime = 129999,
-            size=200
-            },
-        clusters={
-            {   "127.0.0.1",6379 }
+```lua
+return {
+    default = {
+    timeout=1000,
+    pool = {
+        maxIdelTime = 129999,
+        size=200
         },
-        password="Pa88word",
-        database=1,
-        }
+    clusters={
+        {   "127.0.0.1",6379 }
+    },
+    password="Pa88word",
+    database=1,
     }
-    ```
+}
+```
+
 之后在缓存配置中直接引入redis的配置：
 
-    ```lua
-    local cacheFac = require('tiny.cache')
-    local config = {
-        cache_type="redis",
-        cache_cfg={
-            expired=1000,
-            key_pre="",
-            redis="default",
-        },
-    }
-    local cache = cacheFac.get(config)
-    ```
+```lua
+local cacheFac = require('tiny.cache')
+local config = {
+    cache_type="redis",
+    cache_cfg={
+        expired=1000,
+        key_pre="",
+        redis="default",
+    },
+}
+local cache = cacheFac.get(config)
+```
+    
 或是直接将这个配置存在config/cache.lua中：
 3. 定义config/cache.lua后初始化缓存
 config/cache.lua
 
-    ```lua
-    return {
-        rediscache = {
-            cache_type="redis",
-            cache_cfg={
-                expired=1000,
-                key_pre="",
-                redis="default"
-                }
+```lua
+return {
+    rediscache = {
+        cache_type="redis",
+        cache_cfg={
+            expired=1000,
+            key_pre="",
+            redis="default"
             }
-    }
-    ```
+        }
+}
+```
 
 这时业务代码变为：
 
-    ```lua
-    local cacheFac = require('tiny.cache')
-    local cache = cacheFac.get('rediscache')
-    ```
+```lua
+local cacheFac = require('tiny.cache')
+local cache = cacheFac.get('rediscache')
+```
 
 ### 配置文件的位置
 
@@ -151,97 +153,97 @@ config/cache.lua
 
 1. config.mysql
 
-    ```lua
-    return {
-        default  = {
-        timeout = 3000,
-            pool = {
-                maxIdleTime = 120000,
-                size = 800,
-            },
-            clusters = {
-                master = {"127.0.0.1", "3306"},
-                slave = {
-                    {"127.0.0.1", "3306"},
-                }
-            },
-            database = "open_tiny",
-            user = "tiny",
-            password = "Pa88word",
-            charset = "utf8",
-            maxPacketSize = 1024*1024,
-        }
+```lua
+return {
+    default  = {
+    timeout = 3000,
+        pool = {
+            maxIdleTime = 120000,
+            size = 800,
+        },
+        clusters = {
+            master = {"127.0.0.1", "3306"},
+            slave = {
+                {"127.0.0.1", "3306"},
+            }
+        },
+        database = "open_tiny",
+        user = "tiny",
+        password = "Pa88word",
+        charset = "utf8",
+        maxPacketSize = 1024*1024,
     }
-    ```
+}
+```
 
 2. config.redis
 
-    ```lua
-    return {
-        default = {
-        timeout=1000,
-        pool = {
-            maxIdelTime = 129999,
-            size=200
-            },
-        clusters={
-            {   "127.0.0.1",6379 }
+```lua
+return {
+    default = {
+    timeout=1000,
+    pool = {
+        maxIdelTime = 129999,
+        size=200
         },
-        password="Pa88word",
-        database=1,
-        }
+    clusters={
+        {   "127.0.0.1",6379 }
+    },
+    password="Pa88word",
+    database=1,
     }
-    ```
+}
+```
 
 3. config.cache
 
-    ```lua
-    return {
-        redis = {
-            cache_type="redis",
-            cache_cfg={
-                catlog="user",
-                expired=1000,
-                redis="default"
-                }
-            },
-        user = {
-            cache_type="shared",
-            cache_cfg={
-                catlog="user",
-                expired=10
-                }
-            },
-        sync = {
-            cache_type = "sync",
-            cache_cfg ={
-                redis="default",
-                catlog="user",
-                expired=1000,
-                channel="lua:sync:cache",
+```lua
+return {
+    redis = {
+        cache_type="redis",
+        cache_cfg={
+            catlog="user",
+            expired=1000,
+            redis="default"
             }
         },
-        sync_redis ={
-            cache_type = "sync",
-            cache_cfg ={
-                redis={
-                    timeout=1000,
-                    pool = {
-                        maxIdelTime = 129999,
-                        size=200
-                    },
-                    clusters={
-                        {   "127.0.0.1",6379 }
-                    },
-                    password="Pa88word",
-                },
-                catlog="user",
-                expired=1000,
-                channel="lua:sync:cache",
+    user = {
+        cache_type="shared",
+        cache_cfg={
+            catlog="user",
+            expired=10
             }
+        },
+    sync = {
+        cache_type = "sync",
+        cache_cfg ={
+            redis="default",
+            catlog="user",
+            expired=1000,
+            channel="lua:sync:cache",
+        }
+    },
+    sync_redis ={
+        cache_type = "sync",
+        cache_cfg ={
+            redis={
+                timeout=1000,
+                pool = {
+                    maxIdelTime = 129999,
+                    size=200
+                },
+                clusters={
+                    {   "127.0.0.1",6379 }
+                },
+                password="Pa88word",
+            },
+            catlog="user",
+            expired=1000,
+            channel="lua:sync:cache",
         }
     }
-    ```
+}
+```
 
 ## 快速开始
 
@@ -323,7 +325,6 @@ local m = model:new(
     if item2 ~= nil then
         fac：delete(item2)
     end
-
 ```
 
 ### 分页
